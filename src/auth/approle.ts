@@ -25,7 +25,11 @@ export class AppRoleAuth extends BaseEngine {
     // ─── Login ───────────────────────────────────────────────────────
 
     async login(payload: AppRoleLoginRequest): Promise<OpenBaoResponse<unknown>> {
-        return this.post<unknown>("/login", payload);
+        const result = await this.post<unknown>("/login", payload);
+        if (result.auth?.client_token) {
+            this.client.setToken(result.auth.client_token);
+        }
+        return result;
     }
 
     // ─── Roles ───────────────────────────────────────────────────────

@@ -18,7 +18,11 @@ export class UserpassAuth extends BaseEngine {
     }
 
     async login(username: string, payload: UserpassLoginRequest): Promise<OpenBaoResponse<unknown>> {
-        return this.post<unknown>(`/login/${username}`, payload);
+        const result = await this.post<unknown>(`/login/${username}`, payload);
+        if (result.auth?.client_token) {
+            this.client.setToken(result.auth.client_token);
+        }
+        return result;
     }
 
     // ─── Users ───────────────────────────────────────────────────────

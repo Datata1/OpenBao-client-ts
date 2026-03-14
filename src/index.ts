@@ -153,4 +153,8 @@ export class OpenBaoClient {
         this.totp = new TOTPEngine(this.core, options.totpMountPoint);
         this.cubbyhole = new CubbyholeEngine(this.core);
     }
+
+    setToken(token: string): void {
+        this.core.setToken(token);
+    }
 }

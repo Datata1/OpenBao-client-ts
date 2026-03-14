@@ -4,8 +4,8 @@ import type { OpenBaoResponse } from "../types/common";
 export interface OpenBaoClientConfig {
     /** Base URL of the OpenBao / Vault server (e.g. "https://vault.example.com"). */
     endpoint: string;
-    /** Authentication token. */
-    token: string;
+    /** Authentication token. Can be omitted for unauthenticated calls (e.g. login). */
+    token?: string;
     /** Optional namespace (Enterprise / OpenBao namespace support). */
     namespace?: string;
 }
@@ -23,14 +23,22 @@ export interface RequestOptions {
  */
 export class OpenBaoCoreClient {
     private readonly endpoint: string;
-    private readonly token: string;
+    private token: string;
     private readonly namespace?: string;
 
     constructor(config: OpenBaoClientConfig) {
         // Strip trailing slash so callers can use paths starting with `/`
         this.endpoint = config.endpoint.replace(/\/+$/, "");
-        this.token = config.token;
+        this.token = config.token ?? "";
         this.namespace = config.namespace;
+    }
+
+    /**
+     * Update the authentication token used for subsequent requests.
+     * Called automatically by auth login methods.
+     */
+    setToken(token: string): void {
+        this.token = token;
     }
 
     /**
