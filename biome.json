@@ -1,0 +1,25 @@
+{
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 120
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "double",
+            "trailingComma": "all",
+            "semicolons": "always"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        }
+    },
+    "files": {
+        "include": ["src/**/*.ts", "src/**/*.tsx"],
+        "ignore": ["node_modules/**", "dist/**"]
+    }
+}

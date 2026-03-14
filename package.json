@@ -1,0 +1,31 @@
+{
+  "name": "openbao-client",
+  "version": "0.1.0",
+  "description": "Lightweight, zero-dependency OpenBao (Vault) API client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "clean": "rm -rf dist",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "check": "biome check --write ."
+  },
+  "keywords": [
+    "openbao",
+    "vault",
+    "secrets",
+    "kv2"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "undici": "^7.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  }
+}
