@@ -163,7 +163,7 @@ export interface PolicyListResponse {
 
 export interface PolicyResponse {
     name: string;
-    rules: string;
+    policy: string;
 }
 
 export interface PolicyInput {
@@ -214,8 +214,6 @@ export interface LeaseRevokeRequest {
 export interface LeaseListResponse {
     keys: string[];
 }
-
-// ── Wrapping ─────────────────────────────────────────────────────────
 
 export interface WrapLookupResponse {
     creation_time: string;

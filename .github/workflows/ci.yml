@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Biome lint
+        run: yarn lint
+
+      - name: Typecheck
+        run: yarn build
+
+  test:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: lint
+
+    services:
+      openbao:
+        image: quay.io/openbao/openbao:latest
+        ports:
+          - 8200:8200
+        env:
+          BAO_DEV_ROOT_TOKEN_ID: test-root-token
+          BAO_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+          SKIP_SETCAP: "true"
+        options: >-
+          --cap-add IPC_LOCK
+          --health-cmd "bao status -address=http://127.0.0.1:8200"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Run tests
+        run: yarn test
+        env:
+          OPENBAO_ADDR: http://localhost:8200
+          OPENBAO_TOKEN: test-root-token

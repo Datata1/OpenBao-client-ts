@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Publish
+    runs-on: ubuntu-latest
+
+    services:
+      openbao:
+        image: quay.io/openbao/openbao:latest
+        ports:
+          - 8200:8200
+        env:
+          BAO_DEV_ROOT_TOKEN_ID: test-root-token
+          BAO_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+          SKIP_SETCAP: "true"
+        options: >-
+          --cap-add IPC_LOCK
+          --health-cmd "bao status -address=http://127.0.0.1:8200"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          registry-url: https://registry.npmjs.org
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Typecheck & Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test
+        env:
+          OPENBAO_ADDR: http://localhost:8200
+          OPENBAO_TOKEN: test-root-token
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

@@ -65,7 +65,12 @@ export class OpenBaoCoreClient {
             throw new OpenBaoError(`OpenBao request failed: ${statusCode}`, statusCode, text);
         }
 
-        return (await body.json()) as OpenBaoResponse<T>;
+        // Some endpoints (e.g. 204 No Content) return an empty body.
+        const text = await body.text();
+        if (!text) {
+            return {} as OpenBaoResponse<T>;
+        }
+        return JSON.parse(text) as OpenBaoResponse<T>;
     }
 }
 
