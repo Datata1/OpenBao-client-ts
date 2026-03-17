@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { AuditDeviceInput, AuditDevicesListResponse } from "../types/sys";
 
-/** `/v1/sys/audit` — audit device management. */
 export class SysAudit extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

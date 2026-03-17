@@ -24,14 +24,10 @@ export class KV2Engine extends BaseEngine {
         super(client, `/v1/${mount}`);
     }
 
-    // ─── Read ────────────────────────────────────────────────────────
-
     async read<T = Record<string, unknown>>(path: string, version?: number): Promise<OpenBaoResponse<KV2Data<T>>> {
         const qs = version !== undefined ? `?version=${version}` : "";
         return this.get<KV2Data<T>>(`/data/${path}${qs}`);
     }
-
-    // ─── Write ───────────────────────────────────────────────────────
 
     async write<T = Record<string, unknown>>(
         path: string,
@@ -45,16 +41,12 @@ export class KV2Engine extends BaseEngine {
         return this.post<KV2WriteResponse>(`/data/${path}`, body);
     }
 
-    // ─── Patch ───────────────────────────────────────────────────────
-
     async patchSecret<T = Record<string, unknown>>(
         path: string,
         data: Partial<T>,
     ): Promise<OpenBaoResponse<KV2WriteResponse>> {
         return this.patch<KV2WriteResponse>(`/data/${path}`, { data });
     }
-
-    // ─── Delete ──────────────────────────────────────────────────────
 
     async deleteLatest(path: string): Promise<void> {
         await this.del(`/data/${path}`);
@@ -64,26 +56,18 @@ export class KV2Engine extends BaseEngine {
         await this.post(`/delete/${path}`, { versions });
     }
 
-    // ─── Undelete ────────────────────────────────────────────────────
-
     async undelete(path: string, versions: number[]): Promise<void> {
         await this.post(`/undelete/${path}`, { versions });
     }
-
-    // ─── Destroy ─────────────────────────────────────────────────────
 
     async destroy(path: string, versions: number[]): Promise<void> {
         await this.post(`/destroy/${path}`, { versions });
     }
 
-    // ─── List ────────────────────────────────────────────────────────
-
     async listSecrets(path = ""): Promise<OpenBaoResponse<KV2ListResponse>> {
         const suffix = path ? `/${path}` : "";
         return this.list<KV2ListResponse>(`/metadata${suffix}`);
     }
-
-    // ─── Metadata ────────────────────────────────────────────────────
 
     async readMetadata(path: string): Promise<OpenBaoResponse<KV2FullMetadata>> {
         return this.get<KV2FullMetadata>(`/metadata/${path}`);

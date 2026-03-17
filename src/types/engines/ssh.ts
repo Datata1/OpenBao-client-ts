@@ -1,6 +1,3 @@
-// ─── SSH Engine Types ────────────────────────────────────────────────
-
-/** SSH key configuration (signing). */
 export interface SSHRoleConfig {
     key_type: "ca" | "otp";
     default_user?: string;
@@ -21,13 +18,10 @@ export interface SSHRoleConfig {
     not_before_duration?: string;
 }
 
-/** SSH role read response. */
 export interface SSHRoleResponse extends SSHRoleConfig {
-    // Vault returns the superset
     [key: string]: unknown;
 }
 
-/** Sign SSH key request. */
 export interface SSHSignRequest {
     public_key: string;
     ttl?: string;
@@ -38,20 +32,17 @@ export interface SSHSignRequest {
     extensions?: Record<string, string>;
 }
 
-/** Sign SSH key response. */
 export interface SSHSignResponse {
     serial_number: string;
     signed_key: string;
 }
 
-/** Issue SSH credential request. */
 export interface SSHIssueRequest {
     key_type: "ca" | "otp";
     username?: string;
     ip?: string;
 }
 
-/** Issue SSH credential response. */
 export interface SSHIssueResponse {
     serial_number?: string;
     signed_key?: string;
@@ -61,21 +52,17 @@ export interface SSHIssueResponse {
     ip?: string;
 }
 
-/** Verify OTP request. */
 export interface SSHVerifyOTPRequest {
     otp: string;
 }
 
-/** Verify OTP response. */
 export interface SSHVerifyOTPResponse {
     ip: string;
     username: string;
 }
 
-/** SSH CA public key response (raw string, not JSON envelope). */
 export type SSHCAPublicKeyResponse = string;
 
-/** SSH list roles response. */
 export interface SSHListRolesResponse {
     keys: string[];
     key_info: Record<string, { key_type: string }>;

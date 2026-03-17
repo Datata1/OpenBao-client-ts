@@ -11,16 +11,11 @@ import type {
 } from "../types/auth/token";
 import type { OpenBaoResponse } from "../types/common";
 
-/**
- * Token auth method — `/v1/auth/token`.
- */
 export class TokenAuth extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "token") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
         super(client, `/v1/auth/${mount}`);
     }
-
-    // ─── Create ──────────────────────────────────────────────────────
 
     async create(payload?: TokenCreateRequest): Promise<OpenBaoResponse<unknown>> {
         return this.post<unknown>("/create", payload);
@@ -34,8 +29,6 @@ export class TokenAuth extends BaseEngine {
         return this.post<unknown>(`/create/${roleName}`, payload);
     }
 
-    // ─── Lookup ──────────────────────────────────────────────────────
-
     async lookupSelf(): Promise<OpenBaoResponse<TokenLookupResponse>> {
         return this.get<TokenLookupResponse>("/lookup-self");
     }
@@ -48,8 +41,6 @@ export class TokenAuth extends BaseEngine {
         return this.post<TokenLookupResponse>("/lookup-accessor", { accessor });
     }
 
-    // ─── Renew ───────────────────────────────────────────────────────
-
     async renewSelf(increment?: string): Promise<OpenBaoResponse<unknown>> {
         return this.post<unknown>("/renew-self", increment ? { increment } : undefined);
     }
@@ -57,8 +48,6 @@ export class TokenAuth extends BaseEngine {
     async renew(payload: TokenRenewRequest): Promise<OpenBaoResponse<unknown>> {
         return this.post<unknown>("/renew", payload);
     }
-
-    // ─── Revoke ──────────────────────────────────────────────────────
 
     async revokeSelf(): Promise<void> {
         await this.post("/revoke-self");
@@ -76,13 +65,9 @@ export class TokenAuth extends BaseEngine {
         await this.post("/revoke-orphan", { token });
     }
 
-    // ─── Accessors ───────────────────────────────────────────────────
-
     async listAccessors(): Promise<OpenBaoResponse<TokenAccessorsListResponse>> {
         return super.list<TokenAccessorsListResponse>("/accessors");
     }
-
-    // ─── Roles ───────────────────────────────────────────────────────
 
     async createRole(name: string, config: TokenRoleConfig): Promise<void> {
         await this.post(`/roles/${name}`, config);

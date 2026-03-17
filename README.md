@@ -47,17 +47,6 @@ const creds = await client.database.getCredentials("my-role");
 const signed = await client.ssh.signKey("ca-role", { public_key: "ssh-ed25519 ..." });
 ```
 
-## Project Structure
-
-```
-src/
-├── core/           # HTTP client, base engine
-├── types/          # All request/response types
-├── sys/            # System backend (health, seal, mounts, policies, ...)
-├── auth/           # Auth methods (token, approle, userpass)
-├── engines/        # Secret engines (kv2, kv1, transit, pki, database, ssh, totp, cubbyhole)
-└── index.ts        # Main facade + barrel exports
-```
 
 ## Adding New Engines
 

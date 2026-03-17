@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { MountInput, MountOutput, MountTuneInput, MountsListResponse } from "../types/sys";
 
-/** `/v1/sys/mounts` — secret engine lifecycle. */
 export class SysMounts extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

@@ -3,9 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { KV1Data, KV1ListResponse } from "../types/engines/kv1";
 
-/**
- * KV Version 1 secrets engine (unversioned).
- */
 export class KV1Engine extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "kv") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");

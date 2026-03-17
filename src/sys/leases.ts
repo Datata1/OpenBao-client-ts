@@ -9,7 +9,6 @@ import type {
     LeaseRevokeRequest,
 } from "../types/sys";
 
-/** `/v1/sys/leases` — lease lifecycle. */
 export class SysLeases extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

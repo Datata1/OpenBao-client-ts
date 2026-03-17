@@ -11,16 +11,11 @@ import type {
     TOTPValidateResponse,
 } from "../types/engines/totp";
 
-/**
- * TOTP secrets engine — time-based one-time password generation.
- */
 export class TOTPEngine extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "totp") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
         super(client, `/v1/${mount}`);
     }
-
-    // ─── Keys ────────────────────────────────────────────────────────
 
     async createKey(name: string, config: TOTPCreateKeyRequest): Promise<OpenBaoResponse<TOTPCreateKeyResponse>> {
         return this.post<TOTPCreateKeyResponse>(`/keys/${name}`, config);
@@ -37,8 +32,6 @@ export class TOTPEngine extends BaseEngine {
     async listKeys(): Promise<OpenBaoResponse<TOTPListKeysResponse>> {
         return this.list<TOTPListKeysResponse>("/keys");
     }
-
-    // ─── Code ────────────────────────────────────────────────────────
 
     async generateCode(name: string): Promise<OpenBaoResponse<TOTPCodeResponse>> {
         return this.get<TOTPCodeResponse>(`/code/${name}`);

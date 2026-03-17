@@ -2,10 +2,6 @@ import { BaseEngine } from "../core/base-engine";
 import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 
-/**
- * Cubbyhole secrets engine — per-token private secret storage.
- * No versioning, no sharing between tokens.
- */
 export class CubbyholeEngine extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/cubbyhole");

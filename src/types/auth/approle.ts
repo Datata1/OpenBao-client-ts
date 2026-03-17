@@ -1,12 +1,8 @@
-// ─── AppRole Auth Types ──────────────────────────────────────────────
-
-/** AppRole login request. */
 export interface AppRoleLoginRequest {
     role_id: string;
     secret_id?: string;
 }
 
-/** AppRole role configuration. */
 export interface AppRoleRoleConfig {
     bind_secret_id?: boolean;
     secret_id_bound_cidrs?: string[];
@@ -24,18 +20,14 @@ export interface AppRoleRoleConfig {
     token_type?: "default" | "service" | "batch";
 }
 
-/** AppRole role response. */
 export interface AppRoleRoleResponse extends AppRoleRoleConfig {
-    // Vault adds fields on read
     [key: string]: unknown;
 }
 
-/** AppRole role ID response. */
 export interface AppRoleRoleIdResponse {
     role_id: string;
 }
 
-/** Generate secret ID request. */
 export interface AppRoleSecretIdRequest {
     metadata?: string;
     cidr_list?: string[];
@@ -44,7 +36,6 @@ export interface AppRoleSecretIdRequest {
     ttl?: string;
 }
 
-/** Generate secret ID response. */
 export interface AppRoleSecretIdResponse {
     secret_id: string;
     secret_id_accessor: string;
@@ -52,7 +43,6 @@ export interface AppRoleSecretIdResponse {
     secret_id_ttl: number;
 }
 
-/** Lookup secret ID response. */
 export interface AppRoleSecretIdLookupResponse {
     cidr_list: string[];
     creation_time: string;
@@ -65,12 +55,10 @@ export interface AppRoleSecretIdLookupResponse {
     token_bound_cidrs: string[];
 }
 
-/** Secret ID accessor list. */
 export interface AppRoleSecretIdAccessorsResponse {
     keys: string[];
 }
 
-/** AppRole roles list. */
 export interface AppRoleListRolesResponse {
     keys: string[];
 }

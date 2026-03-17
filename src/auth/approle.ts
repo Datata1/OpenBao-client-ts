@@ -13,16 +13,11 @@ import type {
 } from "../types/auth/approle";
 import type { OpenBaoResponse } from "../types/common";
 
-/**
- * AppRole auth method — `/v1/auth/approle`.
- */
 export class AppRoleAuth extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "approle") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
         super(client, `/v1/auth/${mount}`);
     }
-
-    // ─── Login ───────────────────────────────────────────────────────
 
     async login(payload: AppRoleLoginRequest): Promise<OpenBaoResponse<unknown>> {
         const result = await this.post<unknown>("/login", payload);
@@ -31,8 +26,6 @@ export class AppRoleAuth extends BaseEngine {
         }
         return result;
     }
-
-    // ─── Roles ───────────────────────────────────────────────────────
 
     async createRole(name: string, config: AppRoleRoleConfig): Promise<void> {
         await this.post(`/role/${name}`, config);
@@ -50,8 +43,6 @@ export class AppRoleAuth extends BaseEngine {
         return super.list<AppRoleListRolesResponse>("/role");
     }
 
-    // ─── Role ID ─────────────────────────────────────────────────────
-
     async readRoleId(name: string): Promise<OpenBaoResponse<AppRoleRoleIdResponse>> {
         return this.get<AppRoleRoleIdResponse>(`/role/${name}/role-id`);
     }
@@ -59,8 +50,6 @@ export class AppRoleAuth extends BaseEngine {
     async updateRoleId(name: string, roleId: string): Promise<void> {
         await this.post(`/role/${name}/role-id`, { role_id: roleId });
     }
-
-    // ─── Secret ID ──────────────────────────────────────────────────
 
     async generateSecretId(
         roleName: string,

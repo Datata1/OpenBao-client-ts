@@ -2,25 +2,17 @@ import { type Dispatcher, request } from "undici";
 import type { OpenBaoResponse } from "../types/common";
 
 export interface OpenBaoClientConfig {
-    /** Base URL of the OpenBao / Vault server (e.g. "https://vault.example.com"). */
     endpoint: string;
-    /** Authentication token. Can be omitted for unauthenticated calls (e.g. login). */
     token?: string;
-    /** Optional namespace (Enterprise / OpenBao namespace support). */
     namespace?: string;
 }
 
-/** Options forwarded to undici's `request()`. */
 export interface RequestOptions {
     method?: Dispatcher.HttpMethod;
     body?: string;
     headers?: Record<string, string>;
 }
 
-/**
- * Low-level HTTP client that wraps undici's `request()`.
- * All engine classes delegate their HTTP calls through this client.
- */
 export class OpenBaoCoreClient {
     private readonly endpoint: string;
     private token: string;
@@ -43,7 +35,7 @@ export class OpenBaoCoreClient {
 
     /**
      * Send an authenticated request to the OpenBao API and return the
-     * strongly-typed JSON envelope.
+     * typed JSON envelope.
      *
      * @param path - API path **including** the leading `/v1/` prefix.
      * @param opts - Optional request overrides (method, body, headers).
@@ -77,10 +69,6 @@ export class OpenBaoCoreClient {
     }
 }
 
-/**
- * Custom error class that preserves the HTTP status code and raw body
- * returned by OpenBao.
- */
 export class OpenBaoError extends Error {
     constructor(
         message: string,

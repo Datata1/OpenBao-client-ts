@@ -1,6 +1,3 @@
-// ─── Token Auth Types ────────────────────────────────────────────────
-
-/** Create token request. */
 export interface TokenCreateRequest {
     id?: string;
     role_name?: string;
@@ -18,7 +15,6 @@ export interface TokenCreateRequest {
     type?: "service" | "batch";
 }
 
-/** Response from token lookup (self or other). */
 export interface TokenLookupResponse {
     accessor: string;
     creation_time: number;
@@ -39,18 +35,15 @@ export interface TokenLookupResponse {
     type: string;
 }
 
-/** Renew token request. */
 export interface TokenRenewRequest {
     token?: string;
     increment?: string;
 }
 
-/** Revoke token request. */
 export interface TokenRevokeRequest {
     token: string;
 }
 
-/** Token role configuration. */
 export interface TokenRoleConfig {
     allowed_policies?: string[];
     disallowed_policies?: string[];
@@ -68,12 +61,10 @@ export interface TokenRoleConfig {
     token_bound_cidrs?: string[];
 }
 
-/** Token role response. */
 export interface TokenRoleResponse extends TokenRoleConfig {
     name?: string;
 }
 
-/** Token accessors list. */
 export interface TokenAccessorsListResponse {
     keys: string[];
 }

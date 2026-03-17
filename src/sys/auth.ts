@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { AuthMethodInput, AuthMethodOutput, AuthMethodsListResponse, MountTuneInput } from "../types/sys";
 
-/** `/v1/sys/auth` — auth method lifecycle. */
 export class SysAuth extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

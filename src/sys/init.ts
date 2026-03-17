@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { InitRequest, InitResponse, InitStatusResponse } from "../types/sys";
 
-/** `/v1/sys/init` — initialization. */
 export class SysInit extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

@@ -31,16 +31,11 @@ import type {
     TransitVerifyResponse,
 } from "../types/engines/transit";
 
-/**
- * Transit secrets engine — encryption as a service.
- */
 export class TransitEngine extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "transit") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
         super(client, `/v1/${mount}`);
     }
-
-    // ─── Keys ────────────────────────────────────────────────────────
 
     async createKey(name: string, config?: TransitCreateKeyRequest): Promise<void> {
         await this.post(`/keys/${name}`, config);
@@ -66,8 +61,6 @@ export class TransitEngine extends BaseEngine {
         await this.post(`/keys/${name}/rotate`);
     }
 
-    // ─── Export / Backup / Restore ───────────────────────────────────
-
     async exportKey(
         keyType: TransitExportKeyType,
         name: string,
@@ -85,8 +78,6 @@ export class TransitEngine extends BaseEngine {
         await this.post(`/restore/${name}`, payload);
     }
 
-    // ─── Encrypt / Decrypt / Rewrap ──────────────────────────────────
-
     async encrypt(keyName: string, payload: TransitEncryptRequest): Promise<OpenBaoResponse<TransitEncryptResponse>> {
         return this.post<TransitEncryptResponse>(`/encrypt/${keyName}`, payload);
     }
@@ -99,8 +90,6 @@ export class TransitEngine extends BaseEngine {
         return this.post<TransitRewrapResponse>(`/rewrap/${keyName}`, payload);
     }
 
-    // ─── Data Key ────────────────────────────────────────────────────
-
     async generateDataKey(
         keyName: string,
         type: "plaintext" | "wrapped",
@@ -109,8 +98,6 @@ export class TransitEngine extends BaseEngine {
         return this.post<TransitDataKeyResponse>(`/datakey/${type}/${keyName}`, payload);
     }
 
-    // ─── Sign / Verify ──────────────────────────────────────────────
-
     async sign(keyName: string, payload: TransitSignRequest): Promise<OpenBaoResponse<TransitSignResponse>> {
         return this.post<TransitSignResponse>(`/sign/${keyName}`, payload);
     }
@@ -118,8 +105,6 @@ export class TransitEngine extends BaseEngine {
     async verify(keyName: string, payload: TransitVerifyRequest): Promise<OpenBaoResponse<TransitVerifyResponse>> {
         return this.post<TransitVerifyResponse>(`/verify/${keyName}`, payload);
     }
-
-    // ─── Hash / HMAC / Random ───────────────────────────────────────
 
     async hash(payload: TransitHashRequest): Promise<OpenBaoResponse<TransitHashResponse>> {
         return this.post<TransitHashResponse>("/hash", payload);
@@ -132,8 +117,6 @@ export class TransitEngine extends BaseEngine {
     async random(payload?: TransitRandomRequest): Promise<OpenBaoResponse<TransitRandomResponse>> {
         return this.post<TransitRandomResponse>("/random", payload);
     }
-
-    // ─── Cache ───────────────────────────────────────────────────────
 
     async readCacheConfig(): Promise<OpenBaoResponse<TransitCacheConfigResponse>> {
         return this.get<TransitCacheConfigResponse>("/cache-config");

@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { PolicyInput, PolicyListResponse, PolicyResponse } from "../types/sys";
 
-/** `/v1/sys/policies/acl` — ACL policy CRUD. */
 export class SysPolicies extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

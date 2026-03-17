@@ -1,6 +1,3 @@
-// ─── TOTP Engine Types ───────────────────────────────────────────────
-
-/** Create TOTP key request. */
 export interface TOTPCreateKeyRequest {
     /** If true, Vault generates the key. If false, provide `url` or `key`. */
     generate?: boolean;
@@ -27,13 +24,11 @@ export interface TOTPCreateKeyRequest {
     exported?: boolean;
 }
 
-/** Create TOTP key response (when generate=true). */
 export interface TOTPCreateKeyResponse {
     url?: string;
     barcode?: string;
 }
 
-/** Read TOTP key response. */
 export interface TOTPKeyResponse {
     account_name: string;
     algorithm: string;
@@ -42,22 +37,18 @@ export interface TOTPKeyResponse {
     period: number;
 }
 
-/** Generate code response. */
 export interface TOTPCodeResponse {
     code: string;
 }
 
-/** Validate code request. */
 export interface TOTPValidateRequest {
     code: string;
 }
 
-/** Validate code response. */
 export interface TOTPValidateResponse {
     valid: boolean;
 }
 
-/** TOTP list keys response. */
 export interface TOTPListKeysResponse {
     keys: string[];
 }

@@ -21,16 +21,11 @@ import type {
     PKIURLsConfig,
 } from "../types/engines/pki";
 
-/**
- * PKI secrets engine — certificate management.
- */
 export class PKIEngine extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "pki") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
         super(client, `/v1/${mount}`);
     }
-
-    // ─── Issue / Sign ────────────────────────────────────────────────
 
     async issue(roleName: string, payload: PKIIssueRequest): Promise<OpenBaoResponse<PKICertificateResponse>> {
         return this.post<PKICertificateResponse>(`/issue/${roleName}`, payload);
@@ -40,13 +35,9 @@ export class PKIEngine extends BaseEngine {
         return this.post<PKICertificateResponse>(`/sign/${roleName}`, payload);
     }
 
-    // ─── Revoke ──────────────────────────────────────────────────────
-
     async revoke(payload: PKIRevokeRequest): Promise<OpenBaoResponse<PKIRevokeResponse>> {
         return this.post<PKIRevokeResponse>("/revoke", payload);
     }
-
-    // ─── CA ──────────────────────────────────────────────────────────
 
     async generateRoot(payload: PKIGenerateRootRequest): Promise<OpenBaoResponse<PKIGenerateRootResponse>> {
         return this.post<PKIGenerateRootResponse>(`/root/generate/${payload.type}`, payload);
@@ -70,8 +61,6 @@ export class PKIEngine extends BaseEngine {
         return this.post<PKICertificateResponse>("/root/sign-intermediate", payload);
     }
 
-    // ─── Issuers ─────────────────────────────────────────────────────
-
     async listIssuers(): Promise<OpenBaoResponse<PKIListResponse>> {
         return this.list<PKIListResponse>("/issuers");
     }
@@ -79,8 +68,6 @@ export class PKIEngine extends BaseEngine {
     async readIssuer(issuerId: string): Promise<OpenBaoResponse<PKIIssuerResponse>> {
         return this.get<PKIIssuerResponse>(`/issuer/${issuerId}`);
     }
-
-    // ─── Roles ───────────────────────────────────────────────────────
 
     async createRole(name: string, config: PKIRoleConfig): Promise<void> {
         await this.post(`/roles/${name}`, config);
@@ -97,8 +84,6 @@ export class PKIEngine extends BaseEngine {
     async listRoles(): Promise<OpenBaoResponse<PKIListResponse>> {
         return this.list<PKIListResponse>("/roles");
     }
-
-    // ─── CRL / URLs / Tidy ──────────────────────────────────────────
 
     async readCRLConfig(): Promise<OpenBaoResponse<PKICRLConfig>> {
         return this.get<PKICRLConfig>("/config/crl");

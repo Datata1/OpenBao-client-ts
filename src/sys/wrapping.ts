@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { WrapLookupResponse } from "../types/sys";
 
-/** `/v1/sys/wrapping` — response wrapping utilities. */
 export class SysWrapping extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

@@ -8,9 +8,6 @@ import type {
 } from "../types/auth/userpass";
 import type { OpenBaoResponse } from "../types/common";
 
-/**
- * Userpass auth method — `/v1/auth/userpass`.
- */
 export class UserpassAuth extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "userpass") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
@@ -24,8 +21,6 @@ export class UserpassAuth extends BaseEngine {
         }
         return result;
     }
-
-    // ─── Users ───────────────────────────────────────────────────────
 
     async createUser(username: string, config: UserpassUserConfig): Promise<void> {
         await this.post(`/users/${username}`, config);

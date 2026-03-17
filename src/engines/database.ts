@@ -13,16 +13,11 @@ import type {
     DatabaseStaticRoleResponse,
 } from "../types/engines/database";
 
-/**
- * Database secrets engine — dynamic credential generation.
- */
 export class DatabaseEngine extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "database") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
         super(client, `/v1/${mount}`);
     }
-
-    // ─── Connections ─────────────────────────────────────────────────
 
     async configureConnection(name: string, config: DatabaseConnectionConfig): Promise<void> {
         await this.post(`/config/${name}`, config);
@@ -48,8 +43,6 @@ export class DatabaseEngine extends BaseEngine {
         await this.post(`/rotate-root/${name}`);
     }
 
-    // ─── Dynamic Roles ──────────────────────────────────────────────
-
     async createRole(name: string, config: DatabaseRoleConfig): Promise<void> {
         await this.post(`/roles/${name}`, config);
     }
@@ -69,8 +62,6 @@ export class DatabaseEngine extends BaseEngine {
     async getCredentials(roleName: string): Promise<OpenBaoResponse<DatabaseCredentialsResponse>> {
         return this.get<DatabaseCredentialsResponse>(`/creds/${roleName}`);
     }
-
-    // ─── Static Roles ───────────────────────────────────────────────
 
     async createStaticRole(name: string, config: DatabaseStaticRoleConfig): Promise<void> {
         await this.post(`/static-roles/${name}`, config);

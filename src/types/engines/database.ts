@@ -1,6 +1,3 @@
-// ─── Database Engine Types ───────────────────────────────────────────
-
-/** Configuration for a database connection. */
 export interface DatabaseConnectionConfig {
     plugin_name: string;
     connection_url?: string;
@@ -14,7 +11,6 @@ export interface DatabaseConnectionConfig {
     [key: string]: unknown;
 }
 
-/** Read connection response. */
 export interface DatabaseConnectionResponse {
     plugin_name: string;
     connection_details: Record<string, unknown>;
@@ -23,7 +19,6 @@ export interface DatabaseConnectionResponse {
     password_policy: string;
 }
 
-/** Database role configuration. */
 export interface DatabaseRoleConfig {
     db_name: string;
     default_ttl?: string;
@@ -36,7 +31,6 @@ export interface DatabaseRoleConfig {
     credential_config?: Record<string, unknown>;
 }
 
-/** Database role response. */
 export interface DatabaseRoleResponse {
     db_name: string;
     default_ttl: number;
@@ -49,7 +43,6 @@ export interface DatabaseRoleResponse {
     credential_config: Record<string, unknown>;
 }
 
-/** Static role configuration. */
 export interface DatabaseStaticRoleConfig {
     db_name: string;
     username: string;
@@ -59,18 +52,15 @@ export interface DatabaseStaticRoleConfig {
     credential_config?: Record<string, unknown>;
 }
 
-/** Static role response. */
 export interface DatabaseStaticRoleResponse extends DatabaseStaticRoleConfig {
     last_vault_rotation: string;
 }
 
-/** Dynamic credentials response. */
 export interface DatabaseCredentialsResponse {
     username: string;
     password: string;
 }
 
-/** Static credentials response. */
 export interface DatabaseStaticCredentialsResponse {
     username: string;
     password: string;
@@ -79,7 +69,6 @@ export interface DatabaseStaticCredentialsResponse {
     ttl: number;
 }
 
-/** List response. */
 export interface DatabaseListResponse {
     keys: string[];
 }

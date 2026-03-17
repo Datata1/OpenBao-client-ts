@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { HAStatusResponse, LeaderResponse } from "../types/sys";
 
-/** `/v1/sys/leader` & `/v1/sys/ha-status` — HA cluster info. */
 export class SysLeader extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

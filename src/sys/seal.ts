@@ -3,7 +3,6 @@ import type { OpenBaoCoreClient } from "../core/client";
 import type { OpenBaoResponse } from "../types/common";
 import type { SealStatusResponse, UnsealRequest } from "../types/sys";
 
-/** `/v1/sys/seal*` — seal lifecycle. */
 export class SysSeal extends BaseEngine {
     constructor(client: OpenBaoCoreClient) {
         super(client, "/v1/sys");

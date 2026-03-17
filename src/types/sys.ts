@@ -1,8 +1,3 @@
-// ─── System Backend Types ────────────────────────────────────────────
-
-// ── Health ────────────────────────────────────────────────────────────
-
-/** Response from `GET /v1/sys/health`. */
 export interface HealthResponse {
     initialized: boolean;
     sealed: boolean;
@@ -16,14 +11,10 @@ export interface HealthResponse {
     cluster_id: string;
 }
 
-// ── Init ──────────────────────────────────────────────────────────────
-
-/** Status response from `GET /v1/sys/init`. */
 export interface InitStatusResponse {
     initialized: boolean;
 }
 
-/** Request to initialise the Vault. */
 export interface InitRequest {
     secret_shares: number;
     secret_threshold: number;
@@ -35,7 +26,6 @@ export interface InitRequest {
     stored_shares?: number;
 }
 
-/** Response from initialising. */
 export interface InitResponse {
     keys: string[];
     keys_base64: string[];
@@ -44,9 +34,6 @@ export interface InitResponse {
     recovery_keys_base64?: string[];
 }
 
-// ── Seal / Unseal ────────────────────────────────────────────────────
-
-/** Response from `GET /v1/sys/seal-status`. */
 export interface SealStatusResponse {
     type: string;
     initialized: boolean;
@@ -64,16 +51,12 @@ export interface SealStatusResponse {
     storage_type: string;
 }
 
-/** Unseal request body. */
 export interface UnsealRequest {
     key?: string;
     reset?: boolean;
     migrate?: boolean;
 }
 
-// ── Leader ────────────────────────────────────────────────────────────
-
-/** Response from `GET /v1/sys/leader`. */
 export interface LeaderResponse {
     ha_enabled: boolean;
     is_self: boolean;
@@ -83,8 +66,6 @@ export interface LeaderResponse {
     performance_standby: boolean;
     performance_standby_last_remote_wal: number;
 }
-
-// ── HA Status ────────────────────────────────────────────────────────
 
 export interface HANode {
     hostname: string;
@@ -98,8 +79,6 @@ export interface HANode {
 export interface HAStatusResponse {
     nodes: HANode[];
 }
-
-// ── Mounts (Secret Engines) ──────────────────────────────────────────
 
 export interface MountConfig {
     default_lease_ttl?: string | number;
@@ -153,8 +132,6 @@ export interface MountTuneInput {
     token_type?: string;
 }
 
-// ── Auth Methods ─────────────────────────────────────────────────────
-
 export interface AuthMethodInput {
     type: string;
     description?: string;
@@ -179,8 +156,6 @@ export interface AuthMethodOutput {
 
 export type AuthMethodsListResponse = Record<string, AuthMethodOutput>;
 
-// ── Policies ─────────────────────────────────────────────────────────
-
 export interface PolicyListResponse {
     keys: string[];
     policies: string[];
@@ -194,8 +169,6 @@ export interface PolicyResponse {
 export interface PolicyInput {
     policy: string;
 }
-
-// ── Audit Devices ────────────────────────────────────────────────────
 
 export interface AuditDeviceInput {
     type: "file" | "syslog" | "socket";
@@ -213,8 +186,6 @@ export interface AuditDeviceOutput {
 }
 
 export type AuditDevicesListResponse = Record<string, AuditDeviceOutput>;
-
-// ── Leases ───────────────────────────────────────────────────────────
 
 export interface LeaseLookupResponse {
     id: string;
@@ -252,8 +223,6 @@ export interface WrapLookupResponse {
     creation_path: string;
 }
 
-// ── Tools ────────────────────────────────────────────────────────────
-
 export interface ToolsHashRequest {
     input: string;
     algorithm?: string;
@@ -273,15 +242,11 @@ export interface ToolsRandomResponse {
     random_bytes: string;
 }
 
-// ── Key Status / Rotation ────────────────────────────────────────────
-
 export interface KeyStatusResponse {
     term: number;
     install_time: string;
     encryptions: number;
 }
-
-// ── Rekey ─────────────────────────────────────────────────────────────
 
 export interface RekeyInitRequest {
     secret_shares: number;
@@ -319,8 +284,6 @@ export interface RekeyUpdateResponse {
     verification_nonce?: string;
 }
 
-// ── Generate Root ────────────────────────────────────────────────────
-
 export interface GenerateRootInitRequest {
     pgp_key?: string;
 }
@@ -342,8 +305,6 @@ export interface GenerateRootUpdateRequest {
     key: string;
     nonce: string;
 }
-
-// ── Plugins ──────────────────────────────────────────────────────────
 
 export interface PluginInput {
     sha256: string;
@@ -369,8 +330,6 @@ export interface PluginsListResponse {
     detailed: PluginOutput[];
 }
 
-// ── Namespaces ───────────────────────────────────────────────────────
-
 export interface NamespaceInput {
     custom_metadata?: Record<string, string>;
 }
@@ -386,8 +345,6 @@ export interface NamespacesListResponse {
     key_info: Record<string, { id: string; path: string }>;
 }
 
-// ── Remount ──────────────────────────────────────────────────────────
-
 export interface RemountRequest {
     from: string;
     to: string;
@@ -396,8 +353,6 @@ export interface RemountRequest {
 export interface RemountResponse {
     migration_id: string;
 }
-
-// ── Config ───────────────────────────────────────────────────────────
 
 export interface CORSConfig {
     enabled?: boolean;

@@ -1,6 +1,3 @@
-// ─── PKI Engine Types ────────────────────────────────────────────────
-
-/** Request to issue a certificate. */
 export interface PKIIssueRequest {
     common_name: string;
     alt_names?: string;
@@ -13,7 +10,6 @@ export interface PKIIssueRequest {
     exclude_cn_from_sans?: boolean;
 }
 
-/** Response from issuing/signing a certificate. */
 export interface PKICertificateResponse {
     certificate: string;
     issuing_ca: string;
@@ -24,7 +20,6 @@ export interface PKICertificateResponse {
     expiration: number;
 }
 
-/** Request to sign a CSR. */
 export interface PKISignRequest {
     csr: string;
     common_name: string;
@@ -37,7 +32,6 @@ export interface PKISignRequest {
     exclude_cn_from_sans?: boolean;
 }
 
-/** Request to generate a root CA. */
 export interface PKIGenerateRootRequest {
     type: "internal" | "exported" | "existing" | "kms";
     common_name: string;
@@ -52,7 +46,6 @@ export interface PKIGenerateRootRequest {
     format?: "pem" | "der" | "pem_bundle";
 }
 
-/** Response from generating a root CA. */
 export interface PKIGenerateRootResponse {
     certificate: string;
     issuing_ca: string;
@@ -64,7 +57,6 @@ export interface PKIGenerateRootResponse {
     key_name: string;
 }
 
-/** Request to generate an intermediate CA. */
 export interface PKIGenerateIntermediateRequest {
     type: "internal" | "exported" | "existing" | "kms";
     common_name: string;
@@ -76,7 +68,6 @@ export interface PKIGenerateIntermediateRequest {
     format?: "pem" | "der" | "pem_bundle";
 }
 
-/** Response from generating an intermediate CA CSR. */
 export interface PKIGenerateIntermediateResponse {
     csr: string;
     key_id: string;
@@ -84,12 +75,10 @@ export interface PKIGenerateIntermediateResponse {
     private_key_type?: string;
 }
 
-/** Set signed intermediate request. */
 export interface PKISetSignedIntermediateRequest {
     certificate: string;
 }
 
-/** PKI role configuration. */
 export interface PKIRoleConfig {
     ttl?: string;
     max_ttl?: string;
@@ -116,12 +105,10 @@ export interface PKIRoleConfig {
     issuer_ref?: string;
 }
 
-/** PKI role read response. */
 export interface PKIRoleResponse extends PKIRoleConfig {
     name?: string;
 }
 
-/** PKI issuer info. */
 export interface PKIIssuerResponse {
     ca_chain: string[];
     certificate: string;
@@ -134,7 +121,6 @@ export interface PKIIssuerResponse {
     revocation_signature_algorithm: string;
 }
 
-/** PKI CRL config. */
 export interface PKICRLConfig {
     expiry?: string;
     disable?: boolean;
@@ -145,14 +131,12 @@ export interface PKICRLConfig {
     ocsp_expiry?: string;
 }
 
-/** PKI URLs config. */
 export interface PKIURLsConfig {
     issuing_certificates?: string[];
     crl_distribution_points?: string[];
     ocsp_servers?: string[];
 }
 
-/** Tidy request. */
 export interface PKITidyRequest {
     tidy_cert_store?: boolean;
     tidy_revoked_certs?: boolean;
@@ -160,18 +144,15 @@ export interface PKITidyRequest {
     safety_buffer?: string;
 }
 
-/** Revoke request. */
 export interface PKIRevokeRequest {
     serial_number: string;
 }
 
-/** Revoke response. */
 export interface PKIRevokeResponse {
     revocation_time: number;
     revocation_time_rfc3339: string;
 }
 
-/** List response for roles / issuers / certs. */
 export interface PKIListResponse {
     keys: string[];
     key_info?: Record<string, Record<string, unknown>>;

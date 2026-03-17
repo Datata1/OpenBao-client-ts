@@ -13,16 +13,11 @@ import type {
     SSHVerifyOTPResponse,
 } from "../types/engines/ssh";
 
-/**
- * SSH secrets engine — SSH certificate signing & OTP.
- */
 export class SSHEngine extends BaseEngine {
     constructor(client: OpenBaoCoreClient, mountPoint = "ssh") {
         const mount = mountPoint.replace(/^\/+|\/+$/g, "");
         super(client, `/v1/${mount}`);
     }
-
-    // ─── Configuration ──────────────────────────────────────────────
 
     async configureCA(privateKey?: string, publicKey?: string): Promise<void> {
         await this.post("/config/ca", {
@@ -34,8 +29,6 @@ export class SSHEngine extends BaseEngine {
     async deleteCA(): Promise<void> {
         await this.del("/config/ca");
     }
-
-    // ─── Roles ───────────────────────────────────────────────────────
 
     async createRole(name: string, config: SSHRoleConfig): Promise<void> {
         await this.post(`/roles/${name}`, config);
@@ -53,8 +46,6 @@ export class SSHEngine extends BaseEngine {
         return this.list<SSHListRolesResponse>("/roles");
     }
 
-    // ─── Sign / Issue ────────────────────────────────────────────────
-
     async signKey(roleName: string, payload: SSHSignRequest): Promise<OpenBaoResponse<SSHSignResponse>> {
         return this.post<SSHSignResponse>(`/sign/${roleName}`, payload);
     }
@@ -63,13 +54,9 @@ export class SSHEngine extends BaseEngine {
         return this.post<SSHIssueResponse>(`/issue/${roleName}`, payload);
     }
 
-    // ─── Verify ──────────────────────────────────────────────────────
-
     async verifyOTP(payload: SSHVerifyOTPRequest): Promise<OpenBaoResponse<SSHVerifyOTPResponse>> {
         return this.post<SSHVerifyOTPResponse>("/verify", payload);
     }
-
-    // ─── Public Key ──────────────────────────────────────────────────
 
     async readPublicKey(): Promise<OpenBaoResponse<{ public_key: string }>> {
         return this.get<{ public_key: string }>("/config/ca");
